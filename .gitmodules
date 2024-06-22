@@ -1,0 +1,15 @@
+[submodule "laravel-api-server"]
+	path = laravel-api-server
+	url = https://github.com/MAtt5816/laravel-api-server.git
+[submodule "spring-api-server"]
+	path = spring-api-server
+	url = https://github.com/MAtt5816/spring-api-server.git
+[submodule "aspNet-api-server"]
+	path = aspNet-api-server
+	url = https://github.com/MAtt5816/aspNet-api-server.git
+[submodule "expressJS-api-server"]
+	path = expressJS-api-server
+	url = https://github.com/MAtt5816/expressJS-api-server.git
+[submodule "django-api-server"]
+	path = django-api-server
+	url = https://github.com/MAtt5816/django-api-server.git
