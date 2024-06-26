@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/aspNet-api-server" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/django-api-server" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/expressJS-api-server" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/laravel-api-server" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/spring-api-server" vcs="Git" />
+  </component>
+</project>
