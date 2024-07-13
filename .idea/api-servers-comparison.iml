@@ -2,7 +2,14 @@
 <module type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
-    <content url="file://$MODULE_DIR$" />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/aspNet-api-server/aspNet-api-server/bin" />
+      <excludeFolder url="file://$MODULE_DIR$/aspNet-api-server/aspNet-api-server/obj" />
+      <excludeFolder url="file://$MODULE_DIR$/django-api-server/.venv" />
+      <excludeFolder url="file://$MODULE_DIR$/laravel-api-server/vendor" />
+      <excludeFolder url="file://$MODULE_DIR$/spring-api-server/.idea" />
+      <excludeFolder url="file://$MODULE_DIR$/spring-api-server/target" />
+    </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>

@@ -1,0 +1,29 @@
+services:
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin:latest
+    ports:
+      - 8080:80
+    networks:
+      - mysql-db
+  db:
+    container_name: mysql
+    image: database:latest
+    build: database
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3307:3306"
+    volumes:
+      - db-vol:/var/lib/mysql
+    networks:
+      - mysql-db
+
+volumes:
+  db-vol:
+
+networks:
+  mysql-db:
