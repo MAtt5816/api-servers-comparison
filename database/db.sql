@@ -20,7 +20,7 @@ CREATE TABLE students
 
 CREATE TABLE locations
 (
-    user_id       INT,
+    student_id    INT,
     street_number INT,
     street_name   VARCHAR(100),
     city          VARCHAR(100),
@@ -28,7 +28,7 @@ CREATE TABLE locations
     country       VARCHAR(100),
     postcode      VARCHAR(20),
     timezone      VARCHAR(10),
-    FOREIGN KEY (user_id) REFERENCES students (id)
+    FOREIGN KEY (student_id) REFERENCES students (id)
 );
 
 CREATE TABLE users
@@ -45,11 +45,11 @@ CREATE TABLE users
 
 CREATE TABLE pictures
 (
-    user_id   INT,
-    large     VARCHAR(255),
-    medium    VARCHAR(255),
-    thumbnail VARCHAR(255),
-    FOREIGN KEY (user_id) REFERENCES students (id)
+    student_id INT,
+    large      VARCHAR(255),
+    medium     VARCHAR(255),
+    thumbnail  VARCHAR(255),
+    FOREIGN KEY (student_id) REFERENCES students (id)
 );
 
 INSERT INTO students (gender, title, first_name, last_name, email, dob, registered, phone, cell, id_name, id_value, nat)
@@ -2054,7 +2054,7 @@ VALUES ('female', 'Miss', 'Cilla', 'Verton', 'cilla.verton@example.com', '1946-0
        ('female', 'Ms', 'مارال', 'نكو نظر', 'mrl.nkwnzr@example.com', '1998-07-19', '2010-03-02 21:48:33',
         '060-07038372', '0976-064-5470', '', '', 'IR');
 
-INSERT INTO locations (user_id, street_number, street_name, city, state, country, postcode, timezone)
+INSERT INTO locations (student_id, street_number, street_name, city, state, country, postcode, timezone)
 VALUES (1, 2622, 'Eekmolenweg', 'Raerd', 'Groningen', 'Netherlands', '0028 XQ', '+2:00'),
        (2, 5424, 'Trekanten', 'Ugerløse', 'Danmark', 'Denmark', '39301', '+9:30'),
        (3, 9587, 'Woodlawn Avenue', 'Carrigaline', 'Leitrim', 'Ireland', '27970', '+2:00'),
@@ -3358,7 +3358,7 @@ VALUES (1, '2e3847b5-f028-47cb-941c-eb01ca502ed1', 'silvertiger761', 'artemis', 
         '165709bc357041851b5b2c8783909a8b', '1ef46a927c9649ccbe62b4087752c29ba78aa040',
         '6d9a2bcc4112e8119c70da7af480a19b71a07e7b136923f5936ac222c24d7e6d');
 
-INSERT INTO pictures (user_id, large, medium, thumbnail)
+INSERT INTO pictures (student_id, large, medium, thumbnail)
 VALUES (1, 'https://randomuser.me/api/portraits/women/78.jpg', 'https://randomuser.me/api/portraits/med/women/78.jpg',
         'https://randomuser.me/api/portraits/thumb/women/78.jpg'),
        (2, 'https://randomuser.me/api/portraits/women/84.jpg', 'https://randomuser.me/api/portraits/med/women/84.jpg',
