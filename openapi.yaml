@@ -1,0 +1,280 @@
+openapi: 3.0.3
+info:
+  title: API schema for research project
+  description: API schema for research project
+  version: 1.0.0
+servers:
+  - url: 'localhost'
+paths:
+  /hello:
+    get:
+      summary: Returns "Hello World!" phrase
+      description: Returns "Hello World!" phrase.
+      responses:
+        '200':
+          description: successful operation
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/HelloWorld'
+  /student:
+    get:
+      summary: Find first n students
+      description: Find and return first n students ordered by its IDs.
+      parameters:
+        - name: results
+          in: query
+          description: Number of students to return.
+          schema:
+            type: integer
+            default: 1
+            minimum: 1
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Student'
+        '400':
+          description: Invalid 'results' parameter value
+    post:
+      summary: Add a new students
+      description: Add a new students
+      requestBody:
+        description: Create a new students
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Student'
+        required: true
+      responses:
+        '201':
+          description: Created successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Student'
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ErrorMessage'
+  /student/{studentId}:
+    put:
+      summary: Update student
+      description: Update student by given ID.
+      parameters:
+        - name: studentId
+          in: path
+          description: ID of the student to update
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Update existing student
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Student'
+        required: true
+      responses:
+        '200':
+          description: Updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+        '400':
+          description: Invalid input
+        '404':
+          description: Student not found
+        '422':
+          description: Validation exception
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ErrorMessage'
+    patch:
+      summary: Update some fields of student
+      description: Update some fields of student by given student ID.
+      parameters:
+        - name: studentId
+          in: path
+          description: ID of the student to update
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Update existing student
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Student'
+        required: true
+      responses:
+        '200':
+          description: Updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+        '400':
+          description: Invalid input
+        '404':
+          description: Student not found
+        '422':
+          description: Validation exception
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ErrorMessage'
+    delete:
+      summary: Delete student by ID
+      description: Delete student by given ID.
+      parameters:
+        - name: studentId
+          in: path
+          description: ID of the student to delete
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Deleted successfully
+        '404':
+          description: Student not found
+components:
+  schemas:
+    HelloWorld:
+      type: string
+      example: "Hello World!"
+    Student:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          example: 1
+        gender:
+          type: string
+          maxLength: 10
+          example: female
+        title:
+          type: string
+          maxLength: 20
+          example: Miss
+        first_name:
+          type: string
+          maxLength: 50
+          example: Terri
+        last_name:
+          type: string
+          maxLength: 50
+          example: Lucas
+        email:
+          type: string
+          maxLength: 100
+          example: terri.lucas@example.com
+        dob:
+          type: string
+          description: date of birth
+          format: date
+          example: 1964-11-23
+        registered:
+          type: string
+          description: date of registration
+          format: date-time
+          example: 2014-07-23T03:21:42.259Z
+        phone:
+          type: string
+          maxLength: 20
+          example: 03-2662-3559
+        id_name:
+          type: string
+          maxLength: 20
+          description: national identification number type
+          example: TFN
+        id_value:
+          type: string
+          maxLength: 50
+          description: national identification number value
+          example: '230000682'
+        nat:
+          type: string
+          maxLength: 10
+          description: nationality short code
+          example: AU
+        location:
+          $ref: '#/components/schemas/Location'
+        picture:
+          $ref: '#/components/schemas/Picture'
+    Location:
+      type: object
+      properties:
+        street_number:
+          type: integer
+          example: 2595
+        street_name:
+          type: string
+          maxLength: 100
+          example: Main Street
+        city:
+          type: string
+          maxLength: 100
+          example: Tamworth
+        state:
+          type: string
+          maxLength: 100
+          example: Queensland
+        country:
+          type: string
+          maxLength: 100
+          example: Australia
+        postcode:
+          type: string
+          maxLength: 20
+          example: '6066'
+        timezone:
+          type: string
+          maxLength: 10
+          example: +5:30
+    Picture:
+      type: object
+      properties:
+        large:
+          type: string
+          maxLength: 255
+          example: https://randomuser.me/api/portraits/men/75.jpg
+        medium:
+          type: string
+          maxLength: 255
+          example: https://randomuser.me/api/portraits/med/men/75.jpg
+        thumbnail:
+          type: string
+          maxLength: 255
+          example: https://randomuser.me/api/portraits/thumb/men/75.jpg
+    ErrorMessage:
+      type: object
+      properties:
+        field:
+          type: string
+          example: first_name
+        message:
+          type: string
+          example: Input must be string
