@@ -23,6 +23,23 @@ paths:
             text/plain:
               schema:
                 $ref: '#/components/schemas/HelloWorld'
+  /authorize:
+    post:
+      tags:
+        - general
+      summary: Get authorization JWT token
+      description: Returns JWT token for further authorization.
+      responses:
+        '200':
+          description: successful operation
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/JwtToken'
+        '401':
+          description: unauthorized
+      security:
+        - jwt_token_auth: []
   /student:
     get:
       tags:
@@ -48,6 +65,10 @@ paths:
                   $ref: '#/components/schemas/Student'
         '400':
           description: Invalid 'results' parameter value
+        '401':
+          description: unauthorized
+      security:
+        - student_data_auth: []
     post:
       tags:
         - student
@@ -73,6 +94,8 @@ paths:
                   $ref: '#/components/schemas/Student'
         '400':
           description: Invalid input
+        '401':
+          description: unauthorized
         '422':
           description: Validation exception
           content:
@@ -81,6 +104,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ErrorMessage'
+      security:
+        - student_data_auth: []
   /student/{studentId}:
     put:
       tags:
@@ -110,6 +135,8 @@ paths:
                 $ref: '#/components/schemas/Student'
         '400':
           description: Invalid input
+        '401':
+          description: unauthorized
         '404':
           description: Student not found
         '422':
@@ -120,6 +147,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ErrorMessage'
+      security:
+        - student_data_auth: []
     patch:
       tags:
         - student
@@ -148,6 +177,8 @@ paths:
                 $ref: '#/components/schemas/Student'
         '400':
           description: Invalid input
+        '401':
+          description: unauthorized
         '404':
           description: Student not found
         '422':
@@ -158,6 +189,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ErrorMessage'
+      security:
+        - student_data_auth: []
     delete:
       tags:
         - student
@@ -173,13 +206,20 @@ paths:
       responses:
         '204':
           description: Deleted successfully
+        '401':
+          description: unauthorized
         '404':
           description: Student not found
+      security:
+        - student_data_auth: []
 components:
   schemas:
     HelloWorld:
       type: string
       example: "Hello World!"
+    JwtToken:
+      type: string
+      example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
     Student:
       type: object
       properties:
@@ -294,3 +334,11 @@ components:
         message:
           type: string
           example: Input must be string
+  securitySchemes:
+    jwt_token_auth:
+      type: http
+      scheme: basic
+    student_data_auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
