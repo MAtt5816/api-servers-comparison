@@ -5,9 +5,15 @@ info:
   version: 1.0.0
 servers:
   - url: 'localhost'
+tags:
+  - name: general
+  - name: student
+    description: Access to student data.
 paths:
   /hello:
     get:
+      tags:
+        - general
       summary: Returns "Hello World!" phrase
       description: Returns "Hello World!" phrase.
       responses:
@@ -19,6 +25,8 @@ paths:
                 $ref: '#/components/schemas/HelloWorld'
   /student:
     get:
+      tags:
+        - student
       summary: Find first n students
       description: Find and return first n students ordered by its IDs.
       parameters:
@@ -41,6 +49,8 @@ paths:
         '400':
           description: Invalid 'results' parameter value
     post:
+      tags:
+        - student
       summary: Add a new students
       description: Add a new students
       requestBody:
@@ -73,6 +83,8 @@ paths:
                   $ref: '#/components/schemas/ErrorMessage'
   /student/{studentId}:
     put:
+      tags:
+        - student
       summary: Update student
       description: Update student by given ID.
       parameters:
@@ -109,6 +121,8 @@ paths:
                 items:
                   $ref: '#/components/schemas/ErrorMessage'
     patch:
+      tags:
+        - student
       summary: Update some fields of student
       description: Update some fields of student by given student ID.
       parameters:
@@ -145,6 +159,8 @@ paths:
                 items:
                   $ref: '#/components/schemas/ErrorMessage'
     delete:
+      tags:
+        - student
       summary: Delete student by ID
       description: Delete student by given ID.
       parameters:
