@@ -29,6 +29,12 @@ paths:
         - general
       summary: Get authorization JWT token
       description: Returns JWT token for further authorization.
+      requestBody:
+        description: Send authorization data
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthData'
       responses:
         '200':
           description: successful operation
@@ -38,8 +44,6 @@ paths:
                 $ref: '#/components/schemas/JwtToken'
         '401':
           description: unauthorized
-      security:
-        - jwt_token_auth: []
   /student:
     get:
       tags:
@@ -217,6 +221,17 @@ components:
     HelloWorld:
       type: string
       example: "Hello World!"
+    AuthData:
+      type: object
+      properties:
+        username:
+          type: string
+          maxLength: 50
+          example: user1
+        passphrase:
+          type: string
+          maxLength: 255
+          example: secret_password123
     JwtToken:
       type: string
       example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
@@ -335,9 +350,6 @@ components:
           type: string
           example: Input must be string
   securitySchemes:
-    jwt_token_auth:
-      type: http
-      scheme: basic
     student_data_auth:
       type: http
       scheme: bearer
