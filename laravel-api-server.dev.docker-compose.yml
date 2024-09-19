@@ -1,0 +1,46 @@
+services:
+  laravel:
+    container_name: laravel_api_server
+    image: matt5816/laravel-api-server:latest
+    environment:
+      DB_HOST: db
+      DB_DATABASE: ${MYSQL_DATABASE}
+      DB_USERNAME: ${MYSQL_USER}
+      DB_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "5000:80"
+    networks:
+      - mysql-db
+  migrate:
+    container_name: laravel_migrate
+    image: matt5816/laravel-api-server:latest
+    environment:
+      DB_HOST: db
+      DB_DATABASE: ${MYSQL_DATABASE}
+      DB_USERNAME: ${MYSQL_USER}
+      DB_PASSWORD: ${MYSQL_PASSWORD}
+    command: "php artisan migrate"
+    networks:
+      - mysql-db
+    restart: "no"
+  db:
+    container_name: mysql
+    image: database:latest
+    build: database
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3307:3306"
+    volumes:
+      - db-vol:/var/lib/mysql
+    networks:
+      - mysql-db
+
+volumes:
+  db-vol:
+
+networks:
+  mysql-db:
