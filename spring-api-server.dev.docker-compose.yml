@@ -1,0 +1,35 @@
+services:
+  spring:
+    container_name: spring_api_server
+    image: matt5816/spring-api-server:latest
+    environment:
+      db_host: db
+      db_name: ${MYSQL_DATABASE}
+      db_user: ${MYSQL_USER}
+      db_password: ${MYSQL_PASSWORD}
+      jwt_secret: ${JAVA_JWT_SECRET}
+    ports:
+      - "5000:8080"
+    networks:
+      - mysql-db
+  db:
+    container_name: mysql
+    image: database:latest
+    build: database
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3307:3306"
+    volumes:
+      - db-vol:/var/lib/mysql
+    networks:
+      - mysql-db
+
+volumes:
+  db-vol:
+
+networks:
+  mysql-db:
