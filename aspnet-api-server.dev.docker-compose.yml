@@ -1,0 +1,31 @@
+services:
+  aspnet:
+    container_name: aspnet_api_server
+    image: matt5816/aspnet-api-server:latest
+    environment:
+      DB_CONNECTION_STR: server=db;database=${MYSQL_DATABASE};uid=${MYSQL_USER};password=${MYSQL_PASSWORD}
+    ports:
+      - "5000:5000"
+    networks:
+      - mysql-db
+  db:
+    container_name: mysql
+    image: database:latest
+    build: database
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3307:3306"
+    volumes:
+      - db-vol:/var/lib/mysql
+    networks:
+      - mysql-db
+
+volumes:
+  db-vol:
+
+networks:
+  mysql-db:
