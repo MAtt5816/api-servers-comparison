@@ -1,0 +1,25 @@
+services:
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin:latest
+    environment:
+      PMA_HOST: db
+    ports:
+      - "80:80"
+    networks:
+      - mysql-db
+  db:
+    container_name: mysql
+    image: "matt5816/api-servers-comparison-database:latest"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3307:3306"
+    networks:
+      - mysql-db
+
+networks:
+  mysql-db:
