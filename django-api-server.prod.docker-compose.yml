@@ -1,21 +1,19 @@
 services:
-  aspnet:
-    container_name: aspnet_api_server
-    image: matt5816/aspnet-api-server:latest
+  django:
+    container_name: django_api_server
+    image: matt5816/django-api-server:latest
     environment:
-      DB_CONNECTION_STR: server=db;database=${MYSQL_DATABASE};uid=${MYSQL_USER};password=${MYSQL_PASSWORD}
       DB_HOST: db
       DB_NAME: ${MYSQL_DATABASE}
       DB_USER: ${MYSQL_USER}
-      DB_PASS: ${MYSQL_PASSWORD}
+      DB_PASSWORD: ${MYSQL_PASSWORD}
     ports:
-      - "5000:5000"
+      - "80:8000"
     networks:
       - mysql-db
   db:
     container_name: mysql
-    image: database:latest
-    build: database
+    image: "matt5816/api-servers-comparison-database:latest"
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
@@ -23,13 +21,8 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
       - "3307:3306"
-    volumes:
-      - db-vol:/var/lib/mysql
     networks:
       - mysql-db
-
-volumes:
-  db-vol:
 
 networks:
   mysql-db:

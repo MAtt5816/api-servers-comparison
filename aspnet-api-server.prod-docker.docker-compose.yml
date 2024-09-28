@@ -9,13 +9,12 @@ services:
       DB_USER: ${MYSQL_USER}
       DB_PASS: ${MYSQL_PASSWORD}
     ports:
-      - "5000:5000"
+      - "80:5000"
     networks:
       - mysql-db
   db:
     container_name: mysql
-    image: database:latest
-    build: database
+    image: "matt5816/api-servers-comparison-database:latest"
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
@@ -23,13 +22,8 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
       - "3307:3306"
-    volumes:
-      - db-vol:/var/lib/mysql
     networks:
       - mysql-db
-
-volumes:
-  db-vol:
 
 networks:
   mysql-db:
